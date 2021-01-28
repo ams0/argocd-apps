@@ -3,7 +3,7 @@ kind: ClusterIssuer
 metadata:
   name: letsencrypt-prod
   annotations:
-    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook: Skip
 spec:
   acme:
     email: alessandro.vozza@microsoft.com
@@ -11,6 +11,6 @@ spec:
     privateKeySecretRef:
       name: letsencrypt-prod-issuer-account-key
     solvers:
-    - http01:
-        ingress:
-          class: nginx
+      - http01:
+          ingress:
+            class: nginx
