@@ -7,7 +7,7 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   annotations:
-    argocd.argoproj.io/hook: Skip
+    argocd.argoproj.io/hook: Sync
   name: ingress
   namespace: ingress
 spec:
