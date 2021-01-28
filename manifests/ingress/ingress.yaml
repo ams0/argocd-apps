@@ -16,7 +16,8 @@ spec:
     version: 3.21.0
   values:
     controller:
-      kind: Deployment	
+      kind: Deployment
+      replicaCount: 2	
       service:
         annotations:
           "service.beta.kubernetes.io/azure-load-balancer-internal": "true"
