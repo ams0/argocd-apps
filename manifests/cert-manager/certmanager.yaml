@@ -11,6 +11,8 @@ kind: HelmRelease
 metadata:
   name: cert-manager
   namespace: cert-manager
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   releaseName: cert-manager
   chart:
@@ -22,3 +24,20 @@ spec:
     ingressShim:
       defaultIssuerName: "letsencrypt-prod"
       defaultIssuerKind: "ClusterIssuer"
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  acme:
+    email: alessandro.vozza@microsoft.com
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-prod-issuer-account-key
+    solvers:
+      - http01:
+          ingress:
+            class: nginx
