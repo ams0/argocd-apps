@@ -17,5 +17,5 @@ spec:
           - path:
             backend:
               serviceName: argocd-server
-              servicePort: https
+              servicePort: http
       host: argo.ingress.stackmasters.com
