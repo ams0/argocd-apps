@@ -3,6 +3,7 @@ kind: Ingress
 metadata:
   name: argocd-web
   annotations:
+      argocd.argoproj.io/hook: Skip
     cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   tls:

@@ -6,6 +6,8 @@ metadata:
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
+  annotations:
+    argocd.argoproj.io/hook: Skip
   name: ingress
   namespace: ingress
 spec:
@@ -17,4 +19,4 @@ spec:
   values:
     controller:
       kind: Deployment
-      replicaCount: 2	
+      replicaCount: 2
