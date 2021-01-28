@@ -10,10 +10,12 @@ spec:
   project: default
   source:
     path: manifests
+    directory:
+      recurse: true
     repoURL: https://github.com/ams0/argocd-apps
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
-    - CreateNamespace=true
+      - CreateNamespace=true
