@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-web
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  tls:
+    - hosts:
+        - argo.ingress.stackmasters.com
+      secretName: argo-tls-secret
+  rules:
+    - http:
+        paths:
+          - path:
+            backend:
+              serviceName: argo-web
+              servicePort: web
+      host: argo.ingress.stackmasters.com
