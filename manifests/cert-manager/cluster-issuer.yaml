@@ -2,6 +2,8 @@ apiVersion: cert-manager.io/v1alpha2
 kind: ClusterIssuer
 metadata:
   name: letsencrypt-prod
+  annotations:
+    argocd.argoproj.io/hook: PostSync
 spec:
   acme:
     email: alessandro.vozza@microsoft.com
