@@ -6,7 +6,8 @@
 
 ```console
 kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+#the file here differ from the official one here: https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml because it's patched for insecure access, as TLS is terminated at the ingress-controller
+kubectl apply -n argocd -f install.yaml
 ```
 
 Create the bootstrap root application (apps-of-apps)
@@ -15,4 +16,11 @@ Create the bootstrap root application (apps-of-apps)
 kubectl apply -f manifests/root.yaml
 ```
 
-That's it!  Argo will install recursively everything that is present in the `/manifests` folder, including cert-manager+ingress, giving Argo itself a TLS-secured endpoint for the its UI.
+That's it! Argo will install recursively everything that is present in the `/manifests` folder, including cert-manager+ingress, giving Argo itself a TLS-secured endpoint for the its UI.
+
+ToDo
+
+- blobfuse-csi-driver
+- azurefile-csi-driver
+- vault
+- jenkins operator
