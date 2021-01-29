@@ -31,6 +31,7 @@ metadata:
   name: letsencrypt-prod
   annotations:
     argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/hook: Skip
 spec:
   acme:
     email: alessandro.vozza@microsoft.com
