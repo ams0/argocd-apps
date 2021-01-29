@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: falco
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: falco
+  namespace: falco
+spec:
+  releaseName: falco
+  chart:
+    repository: https://falcosecurity.github.io/charts
+    name: falco
+    version: 1.7.1
