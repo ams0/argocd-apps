@@ -24,3 +24,6 @@ ToDo
 - azurefile-csi-driver
 - vault
 - jenkins operator
+- OPA policies
+- Prom operator
+- Loki
