@@ -9,7 +9,7 @@ metadata:
 spec:
   tls:
     - hosts:
-        - argo.ingress.stackmasters.com
+        - argocd.ingress.stackmasters.com
       secretName: argo-tls-secret
   rules:
     - http:
@@ -18,4 +18,4 @@ spec:
             backend:
               serviceName: argocd-server
               servicePort: http
-      host: argo.ingress.stackmasters.com
+      host: argocd.ingress.stackmasters.com
