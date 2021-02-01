@@ -1,15 +1,15 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: root
-  namespace: argocd
+  name: falco
+  namespace: falco
 spec:
   destination:
-    namespace: argocd
+    namespace: falco
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: apps
+    path: manifests/falco
     directory:
       recurse: true
     repoURL: https://github.com/ams0/argocd-apps
