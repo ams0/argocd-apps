@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: blob-csi-driver
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: blob-csi-driver
+  namespace: blob-csi-driver
+spec:
+  releaseName: blob-csi-driver
+  chart:
+    repository: https://raw.githubusercontent.com/kubernetes-sigs/blob-csi-driver/master/charts
+    name: blob-csi-driver
+    version: v1.0.0
