@@ -19,6 +19,7 @@ spec:
     repository: https://charts.jetstack.io
     name: cert-manager
     version: v1.1.0
+  wait: true
   values:
     installCRDs: true
     ingressShim:
