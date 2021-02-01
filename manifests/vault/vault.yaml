@@ -4,7 +4,7 @@ metadata:
   name: "vault"
   namespace: "vault"
   annotations:
-    argocd.argoproj.io/hook: Skip
+    argocd.argoproj.io/hook: Sync
 spec:
   size: 1
   image: vault:1.6.2
@@ -76,8 +76,20 @@ spec:
     # Override the default Ingress specification here
     # This follows the same format as the standard Kubernetes Ingress
     # See: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#ingressspec-v1beta1-extensions
-    spec: {}
-
+    spec:
+      tls:
+        - hosts:
+            - vault.ingress.stackmasters.com
+          secretName: vault-tls-secret
+      rules:
+        - http:
+            paths:
+              - path:
+                backend:
+                  serviceName: vault
+                  servicePort: 8200
+          host: vault.ingress.stackmasters.com
+          
   # Use local disk to store Vault file data, see config section.
   volumes:
     - name: vault-file
