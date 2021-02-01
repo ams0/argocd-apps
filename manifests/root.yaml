@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: apps
+    path: manifests
     directory:
       recurse: true
     repoURL: https://github.com/ams0/argocd-apps
