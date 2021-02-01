@@ -8,6 +8,8 @@ kind: Application
 metadata:
   name: falco
   namespace: falco
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   destination:
     namespace: falco
