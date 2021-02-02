@@ -82,14 +82,8 @@ spec:
             - vault.ingress.stackmasters.com
           secretName: vault-tls-secret
       rules:
-        - http:
-            paths:
-              - path:
-                backend:
-                  serviceName: vault
-                  servicePort: 8200
-          host: vault.ingress.stackmasters.com
-          
+        - host: vault.ingress.stackmasters.com
+
   # Use local disk to store Vault file data, see config section.
   volumes:
     - name: vault-file
