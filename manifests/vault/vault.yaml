@@ -4,7 +4,7 @@ metadata:
   name: "vault"
   namespace: "vault"
   annotations:
-    argocd.argoproj.io/hook: Skip
+    argocd.argoproj.io/hook: Sync
 spec:
   size: 1
   image: vault:1.6.2
