@@ -10,6 +10,7 @@ spec:
   project: default
   source:
     path: manifests
+    targetRevision: HEAD
     directory:
       recurse: true
     repoURL: https://github.com/ams0/argocd-apps

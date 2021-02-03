@@ -36,9 +36,9 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 
 ToDo
 
-- blobfuse-csi-driver
-- azurefile-csi-driver
-- vault
+- blobfuse-csi-driver [DONE]
+- azurefile-csi-driver [DONE]
+- vault {NEED PERSISTENCE}
 - jenkins operator
 - OPA policies
 - Prom operator
