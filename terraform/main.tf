@@ -1,20 +1,20 @@
-resource "azurerm_resource_group" "sm" {
+resource "azurerm_resource_group" "argocd" {
   name     = var.resource_group_name
   location = var.location
 }
 
-resource "azurerm_virtual_network" "sm" {
-  name                = "sm"
-  location            = azurerm_resource_group.sm.location
-  resource_group_name = azurerm_resource_group.sm.name
+resource "azurerm_virtual_network" "argocd" {
+  name                = "argocd"
+  location            = azurerm_resource_group.argocd.location
+  resource_group_name = azurerm_resource_group.argocd.name
   address_space       = var.vnet_address_prefix
 
 }
 
-resource "azurerm_subnet" "sm" {
-  name                 = "sm"
-  resource_group_name  = azurerm_resource_group.sm.name
-  virtual_network_name = azurerm_virtual_network.sm.name
+resource "azurerm_subnet" "argocd" {
+  name                 = "argocd"
+  resource_group_name  = azurerm_resource_group.argocd.name
+  virtual_network_name = azurerm_virtual_network.argocd.name
   address_prefixes     = var.subnet_address_prefix
 }
 
@@ -26,7 +26,7 @@ module "aks" {
   prefix                         = "sm"
   network_plugin                 = "kubenet"
   public_ssh_key                 = var.public_ssh_key
-  vnet_subnet_id                 = azurerm_subnet.sm.id
+  vnet_subnet_id                 = azurerm_subnet.argocd.id
   enable_log_analytics_workspace = false
 
 
@@ -35,7 +35,7 @@ module "aks" {
 
   network_policy = "calico"
 
-  depends_on = [azurerm_subnet.sm]
+  depends_on = [azurerm_subnet.argocd]
 
 }
 

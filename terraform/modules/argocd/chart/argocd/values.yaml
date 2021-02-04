@@ -1,4 +1,3 @@
-bootstrap:
-  repo_url:
-  repo_path:
-  repo_branch:
+server:
+  extraArgs:
+  - --insecure

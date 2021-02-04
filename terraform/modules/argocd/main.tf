@@ -1,15 +1,3 @@
-terraform {
-  required_version = ">= 0.13"
-
-  required_providers {
-    kubectl = {
-      source  = "gavinbunney/kubectl"
-      version = ">= 1.7.0"
-    }
-  }
-}
-
-
 provider "kubernetes" {
   host                   = var.host
   client_key             = base64decode(var.client_key)
@@ -28,47 +16,36 @@ provider "helm" {
   }
 }
 
-provider "kubectl" {
-  load_config_file       = false
-  host                   = var.host
-  client_key             = base64decode(var.client_key)
-  client_certificate     = base64decode(var.client_certificate)
-  cluster_ca_certificate = base64decode(var.cluster_ca_certificate)
-}
-
-
-resource "kubernetes_namespace" "argocd" {
+resource "helm_release" "argocd" {
 
   depends_on = [var.argocd_depens_on]
 
-  metadata {
 
-    name = var.namespace
+  name             = "argocd"
+  chart            = "argo-cd"
+  repository       = "https://argoproj.github.io/argo-helm"
+  namespace        = "argocd"
+  create_namespace = true
+
+  set {
+    name  = "server.image.tag"
+    value = "latest"
   }
+
+#because I can't pass "- --insecure" directly using set{}
+  values = [
+    file("${path.module}/chart/argocd/values.yaml")
+  ]
+
 }
-
-locals {
-  resources = split("\n---\n", file("${path.module}/manifests/install.yaml"))
-}
-
-resource "kubectl_manifest" "install_argo" {
-
-  depends_on = [kubernetes_namespace.argocd]
-
-  count              = length(local.resources)
-  yaml_body          = local.resources[count.index]
-  override_namespace = var.namespace
-  wait               = true
-}
-
 
 resource "helm_release" "rootapp" {
 
-  depends_on = [kubectl_manifest.install_argo]
+  depends_on = [helm_release.argocd]
 
 
-  name             = "argocd"
-  chart            = "${path.module}/chart/argocd"
+  name             = "rootapp"
+  chart            = "${path.module}/chart/rootapp"
   namespace        = "argocd"
   create_namespace = true
 
