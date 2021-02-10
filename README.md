@@ -17,9 +17,15 @@ az network dns record-set a add-record  -n "*.ingress" -g dns -z stackmasters.co
 az network dns record-set a update  -n "*.ingress" -g dns -z stackmasters.com --set ttl=10
 ```
 
+If you already have a cluster, you can install the ArgoCD server with:
+
+```console
+kubectl apply -f install.yaml -n argocd 
+```
+
+Note that I modify the official template to allow insecure connections (SSL is terminated at the ingress controller) and using the latest image.
 
 - Run:
-
 
 Create the bootstrap root application (apps-of-apps)
 
