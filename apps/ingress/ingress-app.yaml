@@ -12,9 +12,9 @@ spec:
     helm:
       parameters:
         - name: controller.kind
-          value: Deployment
+          value: "Deployment"
         - name: controller.replicaCount
-          value: 3
+          value: "3"
     path: ingress-nginx/charts/ingress-nginx/
     repoURL: hhttps://github.com/kubernetes/ingress-nginx
     targetRevision: HEAD
