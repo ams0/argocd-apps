@@ -11,6 +11,8 @@ spec:
   source:
     path: manifests/cert-manager
     targetRevision: HEAD
+    directory:
+      recurse: true
     repoURL: https://github.com/ams0/argocd-apps
   syncPolicy:
     automated:
