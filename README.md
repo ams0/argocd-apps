@@ -19,7 +19,7 @@ az network dns record-set a update  -n "*.ingress" -g dns -z stackmasters.com --
 If you already have a cluster, you can install the ArgoCD server with:
 
 ```console
-kubectl apply -f install.yaml -n argocd
+kubectl apply -f install.yaml -n argocd --wait=true
 ```
 
 Note that I modify the official template to allow insecure connections (SSL is terminated at the ingress controller) and using the latest image.
@@ -47,7 +47,7 @@ az network dns record-set a update  -n "*.ingress" -g $DNS_RG -z $ZONE --set ttl
 That's it! Argo will install recursively everything that is present in the `/manifests` folder, including cert-manager+ingress, giving Argo itself a TLS-secured endpoint for the its UI. You can retrieve the ArgoCD password (for 1.9+):
 
 ```console
-kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -D
+kubectl get secret -n argocd  argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -D
 ```
 
 and use the `argocd` command line:

@@ -1,22 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cluster-issuer
+  name: cert-manager-crds
   namespace: argocd
   annotations:
     argocd.argoproj.io/hook: Sync
-    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
-    argocd.argoproj.io/sync-wave: "3"
+    argocd.argoproj.io/sync-wave: "-4"
 spec:
   destination:
     namespace: cert-manager
     server: https://kubernetes.default.svc
   project: infra
   source:
-    path: manifests/cert-manager
+    path: manifests/cert-manager-crds
     targetRevision: HEAD
-    directory:
-      recurse: true
     repoURL: https://github.com/ams0/argocd-apps
   syncPolicy:
     automated:
