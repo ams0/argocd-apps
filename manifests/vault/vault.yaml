@@ -6,7 +6,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "5"
 spec:
-  size: 1
+  size: 3
   image: vault:1.6.2
   # specify a custom vaults image with bankVaultsImage:
   bankVaultsImage: banzaicloud/bank-vaults:latest
