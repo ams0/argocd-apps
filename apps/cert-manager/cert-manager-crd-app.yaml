@@ -1,32 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cert-manager
+  name: cert-manager-crds
   namespace: argocd
   annotations:
-    argocd.argoproj.io/hook: Sync
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/sync-wave: "-4"
 spec:
   destination:
     namespace: cert-manager
     server: https://kubernetes.default.svc
   project: infra
   source:
-    helm:
-      values: |
-        installCRDs: true
-        global:
-          image:
-            tag: v1.1.0
-        webhook:
-          image:
-            tag: v1.1.0
-        cainjector:
-          image:
-            tag: v1.1.0
-    path: deploy/charts/cert-manager/
-    repoURL: https://github.com/jetstack/cert-manager
+    path: manifests/cert-manager-crds
     targetRevision: HEAD
+    repoURL: https://github.com/ams0/argocd-apps
   syncPolicy:
     automated:
       prune: true
