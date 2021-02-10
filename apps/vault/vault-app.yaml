@@ -25,21 +25,19 @@ spec:
             - vault.ingress.stackmasters.com
           annotations:
             cert-manager.io/cluster-issuer: "letsencrypt-prod"
+        unsealer:
+          image:
+            repository: ghcr.io/banzaicloud/bank-vaults
+          args:
+            [
+              "--mode",
+              "k8s",
+              "--k8s-secret-namespace",
+              "vault",
+              "--k8s-secret-name",
+              "vault-tls",
+            ]
         vault:
-          unsealer:
-            image:
-              repository: ghcr.io/banzaicloud/bank-vaults
-              # tag: ""
-              pullPolicy: IfNotPresent
-            args:
-              [
-                "--mode",
-                "k8s",
-                "--k8s-secret-namespace",
-                "vault",
-                "--k8s-secret-name",
-                "vault-tls",
-              ]
           externalConfig:
             auth:
               - type: kubernetes

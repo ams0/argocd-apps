@@ -65,7 +65,7 @@ ToDo
 ### Ingress
 
 ```console
-INGRESS_IP=`kubectl get svc -n ingress ingress-nginx-controller --output=jsonpath="{.status.loadBalancer.ingress[0]['ip']}"
+INGRESS_IP=`kubectl get svc -n ingress ingress-ingress-nginx-controller --output=jsonpath="{.status.loadBalancer.ingress[0]['ip']}"`
 ZONE=domain.com
 DNS_RG=dns
 
