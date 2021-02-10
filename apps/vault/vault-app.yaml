@@ -26,6 +26,20 @@ spec:
           annotations:
             cert-manager.io/cluster-issuer: "letsencrypt-prod"
         vault:
+          unsealer:
+            image:
+              repository: ghcr.io/banzaicloud/bank-vaults
+              # tag: ""
+              pullPolicy: IfNotPresent
+            args:
+              [
+                "--mode",
+                "k8s",
+                "--k8s-secret-namespace",
+                "vault",
+                "--k8s-secret-name",
+                "vault-tls",
+              ]
           externalConfig:
             auth:
               - type: kubernetes
