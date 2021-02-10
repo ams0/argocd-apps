@@ -7,13 +7,17 @@ spec:
   destination:
     namespace: ingress
     server: https://kubernetes.default.svc
-  project: default
+  project: infra
   source:
-    path: manifests/ingress
+    helm:
+      parameters:
+        - name: controller.kind
+          value: Deployment
+        - name: controller.replicaCount
+          value: 3
+    path: ingress-nginx/charts/ingress-nginx/
+    repoURL: hhttps://github.com/kubernetes/ingress-nginx
     targetRevision: HEAD
-    directory:
-      recurse: true
-    repoURL: https://github.com/ams0/argocd-apps
   syncPolicy:
     automated:
       prune: true
