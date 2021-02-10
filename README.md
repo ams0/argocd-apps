@@ -3,12 +3,11 @@
 ## Deploy AKS with Terrafom
 
 ```console
-tf init  
+tf init
 tf apply -auto-approve
 ```
 
 The template will install AKS and call the ArgoCD module to install everything that is in this repo under the `/manifests` folder, including `cert-manager` and `ingress-nginx`. To allow for the certificates creation, you need to map the ingress public IP to a real wildcard DNS record in a DNS zone (in Azure):
-
 
 ```console
 INGRESS_IP=`kg svc -n ingress ingress-nginx-controller --output=jsonpath="{.status.loadBalancer.ingress[0]['ip']}"`
@@ -20,7 +19,7 @@ az network dns record-set a update  -n "*.ingress" -g dns -z stackmasters.com --
 If you already have a cluster, you can install the ArgoCD server with:
 
 ```console
-kubectl apply -f install.yaml -n argocd 
+kubectl apply -f install.yaml -n argocd
 ```
 
 Note that I modify the official template to allow insecure connections (SSL is terminated at the ingress controller) and using the latest image.
@@ -58,7 +57,6 @@ kubectl port-forward svc/argocd-server 8080:80 --namespace argocd &
 argocd login localhost:8080  --insecure
 ```
 
-
 ToDo
 
 - blobfuse-csi-driver [DONE]
@@ -69,7 +67,6 @@ ToDo
 - Prom operator
 - Loki
 
-
 ### Note
 
 The ArgoCD `install.yaml` differs from the official one, in that installs the `latest` version and enables ``--insecure` connections (as the connections is TLS-terminated at the ingress controller).
@@ -78,4 +75,13 @@ The Vault root token can be retrieved by:
 
 ```console
 kubectl get secrets -n vault vault-unseal-keys -o jsonpath={.data.vault-root} | base64 --decode|pbcopy
+```
+
+## Use private git repository
+
+Create a secret with your Github token (`repo` scope) and patch the `argocd-cm` ConfigMap:
+
+```console
+kubectl create secret generic -n argocd argocd-github-secret --from-literal=token=<token> --from-literal=username=<github_username>
+kubectl patch cm -n argocd argocd-cm --patch-file patch-private-repos.yaml
 ```

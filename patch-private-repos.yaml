@@ -1,0 +1,10 @@
+data:
+  repositories: |
+    - name: argocd-private
+      url: https://github.com/ams0/argocd-private.git
+      passwordSecret:
+        name: argocd-repo-credentials
+        key: token
+      usernameSecret:
+        name: argocd-repo-credentials
+        key: username
