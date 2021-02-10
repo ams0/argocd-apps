@@ -19,6 +19,12 @@ spec:
         global:
           image:
             tag: v1.1.0
+        webhook:
+          image:
+            tag: v1.1.0
+        cainjector:
+          image:
+            tag: v1.1.0
         ingressShim:
           defaultIssuerName: "letsencrypt-prod"
           defaultIssuerKind: "ClusterIssuer"
