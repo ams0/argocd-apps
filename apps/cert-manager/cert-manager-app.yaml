@@ -25,9 +25,6 @@ spec:
         cainjector:
           image:
             tag: v1.1.0
-        ingressShim:
-          defaultIssuerName: "letsencrypt-prod"
-          defaultIssuerKind: "ClusterIssuer"
     path: deploy/charts/cert-manager/
     repoURL: https://github.com/jetstack/cert-manager
     targetRevision: HEAD
