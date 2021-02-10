@@ -1,19 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd
+  name: azurefile-csi-driver
   namespace: argocd
 spec:
   destination:
-    namespace: argocd
+    namespace: csi-drivers
     server: https://kubernetes.default.svc
   project: infra
   source:
-    path: manifests/argocd
+    path: charts/latest/azurefile-csi-driver
     targetRevision: HEAD
-    directory:
-      recurse: true
-    repoURL: https://github.com/ams0/argocd-apps
+    repoURL: https://github.com/kubernetes-sigs/azurefile-csi-driver
   syncPolicy:
     automated:
       prune: true

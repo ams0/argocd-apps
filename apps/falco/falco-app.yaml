@@ -1,19 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd
+  name: falco
   namespace: argocd
 spec:
   destination:
-    namespace: argocd
+    namespace: falco
     server: https://kubernetes.default.svc
   project: infra
   source:
-    path: manifests/argocd
+    path: falco
     targetRevision: HEAD
-    directory:
-      recurse: true
-    repoURL: https://github.com/ams0/argocd-apps
+    repoURL: https://github.com/falcosecurity/charts
   syncPolicy:
     automated:
       prune: true
