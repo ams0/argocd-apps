@@ -19,9 +19,11 @@ az network dns record-set a update  -n "*.ingress" -g dns -z stackmasters.com --
 If you already have a cluster, you can install the ArgoCD server with:
 
 ```console
-kubectl apply -f install.yaml -n argocd --wait=true
-kubectl wait --for condition=Ready -l app.kubernetes.io/name=argocd-server -n argocd pod
+kubectl apply -f install.yaml -n argocd --wait=true ; sleep 5
+kubectl wait --for condition=Ready -l app.kubernetes.io/name=argocd-server -n argocd pod --timeout=120s
 ```
+
+(this is the time to patch the `argocd-cm` if you need access to a private repository).
 
 Note that I modify the official template to allow insecure connections (SSL is terminated at the ingress controller) and using the latest image.
 
@@ -74,7 +76,7 @@ az network dns record-set a update  -n "*.ingress" -g $DNS_RG -z $ZONE --set ttl
 
 ### Insecure ArgoCD
 
-The ArgoCD `install.yaml` differs from the official one, in that installs the `latest` version and enables ``--insecure` connections (as the 
+The ArgoCD `install.yaml` differs from the official one, in that installs the `latest` version and enables ``--insecure` connections (as the
 connections is TLS-terminated at the ingress controller).
 
 ### Vault
