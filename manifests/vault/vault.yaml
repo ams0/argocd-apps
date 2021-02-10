@@ -6,7 +6,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "5"
 spec:
-  size: 3
+  size: 1
   image: vault:latest
   # specify a custom vaults image with bankVaultsImage:
   bankVaultsImage: banzaicloud/bank-vaults:latest
@@ -153,6 +153,14 @@ spec:
             bound_service_account_namespaces: ["default", "vault"]
             policies: ["allow_secrets", "allow_pki"]
             ttl: 1h
+
+    startupSecrets:
+      - type: kv
+        path: secret/data/accounts/aws
+        data:
+          data:
+            AWS_ACCESS_KEY_ID: secretId
+            AWS_SECRET_ACCESS_KEY: s3cr3t
 
     secrets:
       - path: secret
