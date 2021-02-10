@@ -85,3 +85,11 @@ Create a secret with your Github token (`repo` scope) and patch the `argocd-cm` 
 kubectl create secret generic -n argocd argocd-github-secret --from-literal=token=<token> --from-literal=username=<github_username>
 kubectl patch cm -n argocd argocd-cm --patch-file patch-private-repos.yaml
 ```
+
+## Tips
+
+If an app get stuck and cannot be deleted, try:
+
+```console
+argocd app terminate-op cert-manager-crd
+```
