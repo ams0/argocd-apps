@@ -53,6 +53,6 @@ metadata:
 spec:
   releaseName: vault-operator
   chart:
-    repository: https://kubernetes-charts.banzaicloud.com
+    repository: https://github.com/banzaicloud/bank-vaults
     name: vault-operator
     version: 1.11.0
