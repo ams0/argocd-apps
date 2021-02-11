@@ -64,9 +64,9 @@ spec:
             config:
               storage:
                 mysql:
-                  address=vaultql.mysql.database.azure.com:3306
+                  address="vaultql.mysql.database.azure.com:3306"
                   username=vault
-                  mysql.password="[[.Env.MYSQL_PASSWORD]]"
+                  mysql.password="${ .Env.MYSQL_PASSWORD }"
           replicaCount: 2
     path: charts/vault/
     repoURL: https://github.com/banzaicloud/bank-vaults
