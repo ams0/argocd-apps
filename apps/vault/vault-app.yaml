@@ -41,10 +41,9 @@ spec:
           config:
             storage:
               mysql:
-                address: "vaultql.mysql.database.azure.com:3306"
+                address: vaultql.mysql.database.azure.com:3306
+                password: '[[.Env.MYSQL_PASSWORD]]'
                 username: vault
-                database: vault
-                mysql.password: "[[ .Env.MYSQL_PASSWORD ]]"
           externalConfig:
             auth:
               - type: kubernetes

@@ -29180,7 +29180,7 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
-          image: quay.io/jetstack/cert-manager-cainjector:v1.1.0
+          image: quay.io/jetstack/cert-manager-cainjector:v1.2.0
           imagePullPolicy: IfNotPresent
           name: cert-manager
           resources: {}
@@ -29225,7 +29225,7 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
-          image: quay.io/jetstack/cert-manager-controller:v1.1.0
+          image: quay.io/jetstack/cert-manager-controller:v1.2.0
           imagePullPolicy: IfNotPresent
           name: cert-manager
           ports:
@@ -29271,7 +29271,7 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
-          image: quay.io/jetstack/cert-manager-webhook:v1.1.0
+          image: quay.io/jetstack/cert-manager-webhook:v1.2.0
           imagePullPolicy: IfNotPresent
           livenessProbe:
             failureThreshold: 3
