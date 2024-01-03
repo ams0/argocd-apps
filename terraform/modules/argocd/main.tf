@@ -1,25 +1,29 @@
-provider "kubernetes" {
-  host                   = var.host
-  client_key             = base64decode(var.client_key)
-  client_certificate     = base64decode(var.client_certificate)
-  cluster_ca_certificate = base64decode(var.cluster_ca_certificate)
+resource "helm_release" "nginx_ingress_controller" {
+  name             = "ingress-nginx"
+  repository       = "https://kubernetes.github.io/ingress-nginx"
+  chart            = "ingress-nginx"
+  namespace        = "ingress"
+  create_namespace = true
+  timeout          = 600
 
-}
-
-provider "helm" {
-  kubernetes {
-    host                   = var.host
-    client_key             = base64decode(var.client_key)
-    client_certificate     = base64decode(var.client_certificate)
-    cluster_ca_certificate = base64decode(var.cluster_ca_certificate)
-
+  set {
+    name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/azure-load-balancer-health-probe-request-path"
+    value = "/healthz"
   }
+
+    set {
+    name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/azure-dns-label-name"
+    value = "${var.dns_prefix}"
+  }
+
+  set {
+    name  = "controller.nodeSelector.kubernetes\\.io/os"
+    value = "linux"
+  }
+
 }
 
 resource "helm_release" "argocd" {
-
-  depends_on = [var.argocd_depens_on]
-
 
   name             = "argocd"
   chart            = "argo-cd"
@@ -29,10 +33,10 @@ resource "helm_release" "argocd" {
 
   set {
     name  = "server.image.tag"
-    value = "latest"
+    value = "v2.7.15"
   }
 
-#because I can't pass "- --insecure" directly using set{}
+  #because I can't pass "- --insecure" directly using set{}
   values = [
     file("${path.module}/chart/argocd/values.yaml")
   ]
@@ -41,7 +45,7 @@ resource "helm_release" "argocd" {
 
 resource "helm_release" "rootapp" {
 
-  depends_on = [helm_release.argocd]
+  depends_on = [helm_release.argocd, helm_release.nginx_ingress_controller]
 
 
   name             = "rootapp"
@@ -62,6 +66,10 @@ resource "helm_release" "rootapp" {
   set {
     name  = "bootstrap.repo_branch"
     value = var.bootstrap_repo_branch
+  }
+  set {
+    name  = "ingress.host"
+    value = var.dns_name
   }
 
 }

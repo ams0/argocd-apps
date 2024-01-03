@@ -65,3 +65,8 @@ variable "bootstrap_repo_branch" {
   description = "ArgoCD bootstrap repo branch"
   default     = ""
 }
+
+variable "dns_prefix" {
+  description = "DNS unique name for DNS name <prefix>.<region>.cloudapp.azure.com"
+  nullable = false
+ }

@@ -25,7 +25,7 @@ module "aks" {
   kubernetes_version   = var.kubernetes_version
   orchestrator_version = var.kubernetes_version
   prefix               = "sm"
-  network_plugin       = "kubenet"
+  network_plugin       = "azure"
   public_ssh_key       = var.public_ssh_key
   vnet_subnet_id       = azurerm_subnet.argocd.id
 
@@ -37,6 +37,12 @@ module "aks" {
   role_based_access_control_enabled = true
   rbac_aad                          = false
 
+  storage_profile_enabled = true
+  storage_profile_blob_driver_enabled = true
+  storage_profile_disk_driver_enabled = true
+  storage_profile_file_driver_enabled = true
+  secret_rotation_enabled = true
+
   depends_on = [azurerm_subnet.argocd]
 
 }
@@ -45,13 +51,13 @@ module "argocd" {
 
   source = "./modules/argocd"
 
-  argocd_depens_on = [module.aks.aks_id]
+  depends_on = [ module.aks.node_resource_group ]
 
   bootstrap_repo_url     = var.bootstrap_repo_url
   bootstrap_repo_path    = var.bootstrap_repo_path
   bootstrap_repo_branch  = var.bootstrap_repo_branch
-  host                   = module.aks.host
-  client_key             = module.aks.client_key
-  client_certificate     = module.aks.client_certificate
-  cluster_ca_certificate = module.aks.cluster_ca_certificate
+
+  dns_name  = "${var.dns_prefix}.${var.location}.cloudapp.azure.com"
+  dns_prefix = var.dns_prefix
+
 }

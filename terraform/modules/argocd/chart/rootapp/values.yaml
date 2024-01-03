@@ -2,3 +2,5 @@ bootstrap:
   repo_url:
   repo_path:
   repo_branch:
+ingress:
+  host:
