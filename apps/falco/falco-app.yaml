@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
   project: infra
   source:
-    path: falco
+    path: charts/falco
     targetRevision: HEAD
     repoURL: https://github.com/falcosecurity/charts
   syncPolicy:

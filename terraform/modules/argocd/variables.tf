@@ -23,27 +23,12 @@ variable "bootstrap_repo_branch" {
   default     = ""
 }
 
-variable "host" {
-  description = "host"
-  default     = ""
-}
+variable "dns_name" {
+  description = "DNS prefix unique name for DNS name <prefix>.<region>.cloudapp.azure.com"
+  nullable = false
+ }
 
-variable "client_certificate" {
-  description = "client_certificate"
-  default     = ""
-}
-
-variable "client_key" {
-  description = "client_key"
-  default     = ""
-}
-
-variable "cluster_ca_certificate" {
-  description = "cluster_ca_certificate"
-  default     = ""
-}
-
-variable "argocd_depens_on" {
-  description = "argocd_depens_on"
-  default     = ""
-}
+ variable "dns_prefix" {
+  description = "DNS unique name for DNS name <prefix>.<region>.cloudapp.azure.com"
+  nullable = false
+ }

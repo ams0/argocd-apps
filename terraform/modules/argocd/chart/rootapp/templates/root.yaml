@@ -1,3 +1,25 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: infra
+  namespace: {{ .Release.Namespace  }}
+  # Finalizer that ensures that project is not deleted until it is not referenced by any application
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: Infrastructure components
+  clusterResourceWhitelist:
+  - group: "*"
+    kind: "*"
+  # Allow manifests to deploy from any Git repos
+  sourceRepos:
+    - "*"
+  # Only permit applications to deploy to the guestbook namespace in the same cluster
+  destinations:
+    - namespace: "*"
+      server: https://kubernetes.default.svc
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -7,7 +29,7 @@ spec:
   destination:
     namespace: {{ .Release.Namespace  }}
     server: https://kubernetes.default.svc
-  project: default
+  project: infra
   source:
     path: {{ .Values.bootstrap.repo_path }}
     targetRevision: {{ .Values.bootstrap.repo_branch }}
@@ -26,3 +48,29 @@ spec:
         duration: 5s # the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
         factor: 2 # a factor to multiply the base duration after each failed retry
         maxDuration: 10m # the maximum amount of time allowed for the backoff strategy
+---
+apiVersion: "networking.k8s.io/v1"
+kind: Ingress
+metadata:
+  name: argocd-server
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - {{ .Values.ingress.host }}
+      secretName: argo-tls-secret
+  rules:
+    - http:
+        paths:
+          - path: "/"
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  name: http
+      host: {{ .Values.ingress.host }}
