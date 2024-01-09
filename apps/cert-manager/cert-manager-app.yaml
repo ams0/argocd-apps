@@ -42,8 +42,8 @@ spec:
   project: infra
   source:
     path: manifests/cluster-issuer/
-    repoURL: https://github.com/zioproto/argocd-apps
-    targetRevision: refactory-2024
+    repoURL: https://github.com/ams0/argocd-apps
+    targetRevision: main
     directory:
       recurse: true
   syncPolicy:
