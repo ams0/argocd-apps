@@ -1,5 +1,7 @@
 # Bootstrapping an AKS cluster with Terraform, ArgoCD and Helm Operator
 
+**Under maintenance! Expect some cleanup and changes to come in 2024**
+
 ## Deploy AKS with Terrafom
 
 ```console
@@ -59,3 +61,7 @@ If an app get stuck and cannot be deleted, try:
 ```console
 argocd app terminate-op cert-manager-crd
 ```
+
+
+
+This project is licensed under the terms of the MIT license.
